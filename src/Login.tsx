@@ -1,5 +1,6 @@
 import React, { useState, ReactElement } from 'react';
 import axios from 'axios';
+import { useAuth } from './useAuth';
 import {
   Container,
   Box,
@@ -10,44 +11,54 @@ import {
   Button,
   Link,
 } from '@chakra-ui/react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  Link as RouterLink,
+  Navigate,
+} from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 interface tokenI {
   token: string;
 }
 
-interface Props {
-  setToken: (token: tokenI) => void;
-}
+interface Props {}
 
 interface FormValues {
   username: string;
   password: string;
 }
 
-function Login({ setToken }: Props): ReactElement {
+interface CustomizedState {
+  from: {
+    pathname: string;
+  };
+}
+
+function Login({}: Props): ReactElement {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as CustomizedState;
+  const auth = useAuth();
+  const error = auth.error;
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const [error, setError] = useState(false);
+  const from = state?.from?.pathname || '/app';
 
   const onSubmit = ({ username, password }: FormValues) => {
-    axios
-      .post('http://localhost:3000/login', {
-        username,
-        password,
-      })
-      .then((res) => {
-        setToken(res.data);
-        navigate('/');
-      })
-      .catch((err) => setError(true));
+    auth.login(username, password, () => {
+      navigate(from, { replace: true });
+    });
   };
+
+  if (auth.user) {
+    return <Navigate to="/app" />;
+  }
 
   return (
     <Container>
@@ -64,6 +75,7 @@ function Login({ setToken }: Props): ReactElement {
         <FormControl isInvalid={error} mb={3}>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
+            autoComplete="password"
             id="password"
             type="password"
             {...register('password', {

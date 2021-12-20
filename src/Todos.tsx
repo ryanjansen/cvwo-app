@@ -2,14 +2,16 @@ import axios from 'axios';
 import React, { useState, ReactElement, useEffect } from 'react';
 import TodoItem from './TodoItem';
 import type { Todo } from './types';
+import { useAuth } from './useAuth';
 
-import { Container, VStack, Input, Heading } from '@chakra-ui/react';
+import { Container, VStack, Input, Heading, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
-interface Props {
-  token: string;
-}
+interface Props {}
 
-function Todos({ token }: Props): ReactElement {
+function Todos({}: Props): ReactElement {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const [todos, setTodos] = useState<Todo[]>([]);
   const [addTodoInput, setAddTodoInput] = useState<string>('');
 
@@ -19,10 +21,8 @@ function Todos({ token }: Props): ReactElement {
 
   const getTodos = () => {
     axios
-      .get<Todo[]>('http://localhost:3000/todos', {
-        headers: {
-          token,
-        },
+      .get<Todo[]>('/api/todos', {
+        withCredentials: true,
       })
       .then((res) => {
         setTodos(res.data);
@@ -33,11 +33,11 @@ function Todos({ token }: Props): ReactElement {
   const addTodo = (title: string) => {
     axios
       .post(
-        'http://localhost:3000/todos',
+        '/api/todos',
         {
           todo: { title, done: false, category: 'study' },
         },
-        { headers: { token } },
+        { withCredentials: true },
       )
       .then((res) => {
         const newTodos = [res.data, ...todos];
@@ -49,7 +49,7 @@ function Todos({ token }: Props): ReactElement {
 
   const deleteTodo = (id: number) => {
     axios
-      .delete(`http://localhost:3000/todos/${id}`, { headers: { token } })
+      .delete(`/api/todos/${id}`, { withCredentials: true })
       .then((res) => {
         const newTodos = todos.filter((todo) => todo.id !== id);
         setTodos(newTodos);
@@ -59,11 +59,7 @@ function Todos({ token }: Props): ReactElement {
 
   const updateTodo = (done: boolean, id: number) => {
     axios
-      .put(
-        `http://localhost:3000/todos/${id}`,
-        { todo: { done } },
-        { headers: { token } },
-      )
+      .put(`/api/todos/${id}`, { todo: { done } }, { withCredentials: true })
       .then((res) => {
         const newTodos = todos;
         const index = newTodos.findIndex((todo) => todo.id === res.data.id);
@@ -97,6 +93,14 @@ function Todos({ token }: Props): ReactElement {
           />
         ))}
       </VStack>
+      <Button
+        onClick={() => {
+          auth.logout(() => navigate('/', { replace: true }));
+        }}
+        colorScheme="red"
+      >
+        Logout
+      </Button>
     </Container>
   );
 }

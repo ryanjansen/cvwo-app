@@ -3,40 +3,27 @@ import Todos from './Todos';
 import Login from './Login';
 import Signup from './Signup';
 import Home from './Home';
-import useToken from './useToken';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { Box, Button } from '@chakra-ui/react';
+import { AuthProvider, RequireAuth } from './useAuth';
 
 interface AppProps {}
 
 function App({}: AppProps) {
-  const navigate = useNavigate();
-  const { token, setToken, deleteToken } = useToken();
-
-  const handleLogout = () => {
-    deleteToken();
-    navigate('/');
-  };
-
-  if (!token) {
-    return (
+  return (
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/signup" element={<Signup setToken={setToken} />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/app"
+          element={
+            <RequireAuth>
+              <Todos />
+            </RequireAuth>
+          }
+        />
       </Routes>
-    );
-  }
-
-  return (
-    <Box>
-      <Routes>
-        <Route path="/" element={<Todos token={token} />} />
-      </Routes>
-      <Button onClick={handleLogout} colorScheme="red">
-        Logout
-      </Button>
-    </Box>
+    </AuthProvider>
   );
 }
 
