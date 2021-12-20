@@ -1,40 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Todos from './Todos';
+import Login from './Login';
+import Signup from './Signup';
+import Home from './Home';
+import useToken from './useToken';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Box, Button } from '@chakra-ui/react';
 
 interface AppProps {}
 
 function App({}: AppProps) {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
+  const navigate = useNavigate();
+  const { token, setToken, deleteToken } = useToken();
+
+  const handleLogout = () => {
+    deleteToken();
+    navigate('/');
+  };
+
+  if (!token) {
+    return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/signup" element={<Signup setToken={setToken} />} />
+      </Routes>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <Box>
+      <Routes>
+        <Route path="/" element={<Todos token={token} />} />
+      </Routes>
+      <Button onClick={handleLogout} colorScheme="red">
+        Logout
+      </Button>
+    </Box>
   );
 }
 
