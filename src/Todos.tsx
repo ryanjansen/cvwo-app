@@ -4,7 +4,8 @@ import TodoItem from './TodoItem';
 import type { Todo } from './types';
 import { useAuth } from './useAuth';
 
-import { Container, VStack, Input, Heading, Button } from '@chakra-ui/react';
+import AddTodo from './components/AddTodo';
+import { Container, VStack, Heading, StackDivider } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {}
@@ -13,7 +14,6 @@ function Todos({}: Props): ReactElement {
   const auth = useAuth();
   const navigate = useNavigate();
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [addTodoInput, setAddTodoInput] = useState<string>('');
 
   useEffect(() => {
     getTodos();
@@ -42,7 +42,6 @@ function Todos({}: Props): ReactElement {
       .then((res) => {
         const newTodos = [res.data, ...todos];
         setTodos(newTodos);
-        setAddTodoInput('');
       })
       .catch((err) => console.log(err));
   };
@@ -70,20 +69,14 @@ function Todos({}: Props): ReactElement {
   };
 
   return (
-    <Container p={4}>
-      <Input
-        value={addTodoInput}
-        onChange={(e) => setAddTodoInput(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            addTodo(addTodoInput);
-          }
-        }}
-        variant="flushed"
-        placeholder="Add todo"
-        mb={4}
+    <Container maxW="container.sm" mt={10}>
+      <Heading size="md" mb="3">
+        Todos
+      </Heading>
+      <AddTodo
+        addTodo={addTodo}
       />
-      <VStack>
+      <VStack divider={<StackDivider borderColor="gray.100" />}>
         {todos.map((todo) => (
           <TodoItem
             todo={todo}
@@ -93,14 +86,6 @@ function Todos({}: Props): ReactElement {
           />
         ))}
       </VStack>
-      <Button
-        onClick={() => {
-          auth.logout(() => navigate('/', { replace: true }));
-        }}
-        colorScheme="red"
-      >
-        Logout
-      </Button>
     </Container>
   );
 }

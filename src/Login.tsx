@@ -10,6 +10,8 @@ import {
   Input,
   Button,
   Link,
+  Heading,
+  Center,
 } from '@chakra-ui/react';
 import {
   useLocation,
@@ -61,39 +63,42 @@ function Login({}: Props): ReactElement {
   }
 
   return (
-    <Container>
-      <Box as="form" p={4} onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={error} mb={3}>
-          <FormLabel htmlFor="username">Username</FormLabel>
-          <Input
-            id="username"
-            {...register('username', {
-              required: 'This is required',
-            })}
-          />
-        </FormControl>
-        <FormControl isInvalid={error} mb={3}>
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <Input
-            autoComplete="password"
-            id="password"
-            type="password"
-            {...register('password', {
-              required: 'This is required',
-            })}
-          />
-          <FormErrorMessage>
-            {error && 'Wrong username or password'}
-          </FormErrorMessage>
-        </FormControl>
-        <Button type="submit" mr={3}>
-          Login
-        </Button>
-        <Link as={RouterLink} to="/signup">
-          Don't have an account? Signup here
-        </Link>
-      </Box>
-    </Container>
+    <Center h="80vh">
+      <Container>
+        <Heading>Login</Heading>
+        <Box as="form" p={4} onSubmit={handleSubmit(onSubmit)}>
+          <FormControl isInvalid={error} mb={3}>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <Input
+              id="username"
+              {...register('username', {
+                required: 'This is required',
+              })}
+            />
+          </FormControl>
+          <FormControl isInvalid={error} mb={3}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <Input
+              autoComplete="password"
+              id="password"
+              type="password"
+              {...register('password', {
+                required: 'This is required',
+              })}
+            />
+            <FormErrorMessage>
+              {error && 'Wrong username or password'}
+            </FormErrorMessage>
+          </FormControl>
+          <Button type="submit" mr={3}>
+            Login
+          </Button>
+          <Link as={RouterLink} to="/signup">
+            Don't have an account? Signup here
+          </Link>
+        </Box>
+      </Container>
+    </Center>
   );
 }
 

@@ -7,11 +7,12 @@ import {
   Input,
   Checkbox,
   IconButton,
+  Flex,
 } from '@chakra-ui/react';
 
-import { DeleteIcon } from '@chakra-ui/icons';
-
 import type { Todo } from './types';
+
+import dayjs from "dayjs";
 
 interface Props {
   todo: Todo;
@@ -19,35 +20,28 @@ interface Props {
   handleUpdate: (done: boolean, id: number) => void;
 }
 
-function TodoItem({ todo, handleDelete, handleUpdate }: Props): ReactElement {
+function TodoItem({ todo, handleUpdate }: Props): ReactElement {
   const [isChecked, setIsChecked] = useState(todo.done);
+  const dateString = dayjs(todo.due_date).format('DD MMM');
+  console.log(dateString);
   return (
-    <Box
-      w="100%"
-      display="flex"
-      alignItems="center"
-      justifyContent={'space-between'}
-    >
+    <Flex w="100%" p={1}>
+      <Checkbox
+        isChecked={isChecked}
+        mr={4}
+        size="lg"
+        onChange={(e) => {
+          handleUpdate(!todo.done, todo.id);
+          setIsChecked((prev) => !prev);
+        }}
+        colorScheme={"red"}
+      />
+      <Box>
+
       <Text>{todo.title}</Text>
-      <Box display="flex" alignItems={'center'}>
-        <Checkbox
-          isChecked={isChecked}
-          mr={4}
-          size="lg"
-          onChange={(e) => {
-            handleUpdate(!todo.done, todo.id);
-            setIsChecked((prev) => !prev);
-          }}
-        />
-        <IconButton
-          colorScheme="red"
-          aria-label="delete todo"
-          icon={<DeleteIcon />}
-          size="xs"
-          onClick={(e) => handleDelete(todo.id)}
-        />
+      {todo.due_date && <Text fontSize={"sm"} color="gray.500">{dateString}</Text>}
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

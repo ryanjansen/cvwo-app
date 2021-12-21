@@ -3,7 +3,7 @@ import Todos from './Todos';
 import Login from './Login';
 import Signup from './Signup';
 import Home from './Home';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from './useAuth';
 
 interface AppProps {}
@@ -14,6 +14,7 @@ function App({}: AppProps) {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route
           path="/app"
           element={
