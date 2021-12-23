@@ -1,19 +1,19 @@
 import axios from 'axios';
 import React, { useState, ReactElement, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import TodoItem from './TodoItem';
 import type { Todo } from './types';
-import { useAuth } from './useAuth';
+
+import Categories from './Categories';
 
 import AddTodo from './components/AddTodo';
-import { Container, VStack, Heading, StackDivider } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Container, VStack, Heading, StackDivider, Button } from '@chakra-ui/react';
 
 interface Props {}
 
 function Todos({}: Props): ReactElement {
-  const auth = useAuth();
-  const navigate = useNavigate();
   const [todos, setTodos] = useState<Todo[]>([]);
+  const category = useParams().category;
 
   useEffect(() => {
     getTodos();
@@ -21,21 +21,25 @@ function Todos({}: Props): ReactElement {
 
   const getTodos = () => {
     axios
-      .get<Todo[]>('/api/todos', {
+      .get<{todos: Todo[]}>('/api/todos', {
         withCredentials: true,
       })
       .then((res) => {
-        setTodos(res.data);
+        setTodos(res.data.todos);
       })
       .catch((err) => console.log(err));
   };
 
-  const addTodo = (title: string) => {
+  const addTodo = (
+    title: string,
+    category: string | null,
+    date: Date | null,
+  ) => {
     axios
       .post(
         '/api/todos',
         {
-          todo: { title, done: false, category: 'study' },
+          todo: { title, done: false, category: category, due_date: date },
         },
         { withCredentials: true },
       )
@@ -68,24 +72,25 @@ function Todos({}: Props): ReactElement {
       .catch((err) => console.log(err));
   };
 
+  const shownTodos =
+    category !== 'inbox'
+      ? todos.filter((todo) => todo.category === category)
+      : todos;
+
+  console.log(todos);
+
   return (
     <Container maxW="container.sm" mt={10}>
       <Heading size="md" mb="3">
         Todos
       </Heading>
-      <AddTodo
-        addTodo={addTodo}
-      />
+      <AddTodo addTodo={addTodo} />
       <VStack divider={<StackDivider borderColor="gray.100" />}>
-        {todos.map((todo) => (
-          <TodoItem
-            todo={todo}
-            key={todo.id}
-            handleDelete={deleteTodo}
-            handleUpdate={updateTodo}
-          />
+        {shownTodos.map((todo) => (
+          <TodoItem todo={todo} key={todo.id} handleUpdate={deleteTodo} />
         ))}
       </VStack>
+      <Button as={Link} to={"/app/hello"}>Hello</Button>
     </Container>
   );
 }

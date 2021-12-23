@@ -40,7 +40,7 @@ function Signup({}: Props): ReactElement {
 
   const onSubmit = ({ username, password, passwordConfirm }: FormValues) => {
     auth.signup(username, password, passwordConfirm, () => {
-      navigate('/app', { replace: true });
+      navigate('/app/inbox', { replace: true });
     });
   };
 

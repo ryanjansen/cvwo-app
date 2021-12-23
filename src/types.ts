@@ -5,3 +5,10 @@ export interface Todo {
   done: boolean;
   due_date: string;
 }
+
+export interface Category {
+  id: number;
+  title: string;
+}
+
+export type status = 'idle' | 'loading' | 'succeeded' | 'failed';

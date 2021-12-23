@@ -1,9 +1,8 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
   Flex,
   Input,
   IconButton,
-  Tooltip,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -12,18 +11,26 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Box,
-  Heading,
 } from '@chakra-ui/react';
 import { HiOutlineTag } from 'react-icons/hi';
-import { CalendarIcon } from '@chakra-ui/icons';
+import Datepicker from './Datepicker';
 
 interface Props {
-  addTodo: (todo: string) => void;
+  addTodo: (
+    todo: string,
+    category: string | null,
+    due_date: Date | null,
+  ) => void;
 }
 
 function AddTodo({ addTodo }: Props): ReactElement {
   const [addTodoInput, setAddTodoInput] = useState<string>('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date | null>(null);
+
+  const handleDateChange = (date: Date) => {
+    setDate(date);
+  };
+
   return (
     <Flex>
       <Input
@@ -31,8 +38,9 @@ function AddTodo({ addTodo }: Props): ReactElement {
         onChange={(e) => setAddTodoInput(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            addTodo(addTodoInput);
+            addTodo(addTodoInput, 'hello', date);
             setAddTodoInput('');
+            setDate(null);
           }
         }}
         variant="flushed"
@@ -41,25 +49,8 @@ function AddTodo({ addTodo }: Props): ReactElement {
         focusBorderColor="red.500"
         mr={3}
       />
-      <Popover>
-        <Box display="inline-block">
-          <PopoverTrigger>
-            <IconButton
-              aria-label="select due date"
-              icon={<CalendarIcon />}
-              mr="2"
-            />
-          </PopoverTrigger>
-        </Box>
 
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverBody>
-            <Heading>Hello there</Heading>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-
+      <Datepicker handleDateChange={handleDateChange} date={date} />
       <Popover>
         <Box display="inline-block">
           <PopoverTrigger>

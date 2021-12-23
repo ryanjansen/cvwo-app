@@ -33,7 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loadingInitial, setLoadingInitial] = useState(true);
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) setError(null);

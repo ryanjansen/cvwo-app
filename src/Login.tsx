@@ -50,7 +50,7 @@ function Login({}: Props): ReactElement {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const from = state?.from?.pathname || '/app';
+  const from = state?.from?.pathname || '/app/inbox';
 
   const onSubmit = ({ username, password }: FormValues) => {
     auth.login(username, password, () => {

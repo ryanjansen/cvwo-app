@@ -1,9 +1,9 @@
 import React from 'react';
-import Todos from './Todos';
+import Todos from './TodoList';
 import Login from './Login';
 import Signup from './Signup';
 import Home from './Home';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from './useAuth';
 
 interface AppProps {}
@@ -15,8 +15,9 @@ function App({}: AppProps) {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/app" element={<Navigate replace to="/app/inbox" />} />
         <Route
-          path="/app"
+          path="/app/:category"
           element={
             <RequireAuth>
               <Todos />
