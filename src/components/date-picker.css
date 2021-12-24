@@ -5,10 +5,6 @@
   /* overflow: hidden; */
 }
 
-.react-datepicker-popper {
-  transform: translate(943px, 80px) !important;
-}
-
 .react-datepicker__triangle::before, .react-datepicker__triangle::after {
   border-bottom-color: #f7fafc !important;
 }
