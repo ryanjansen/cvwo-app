@@ -1,11 +1,16 @@
-.react-datepicker-wrapper {
-  width: inherit;
-}
 
 .react-datepicker {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', sans-serif;
-  overflow: hidden;
+  /* overflow: hidden; */
+}
+
+.react-datepicker-popper {
+  transform: translate(943px, 80px) !important;
+}
+
+.react-datepicker__triangle::before, .react-datepicker__triangle::after {
+  border-bottom-color: #f7fafc !important;
 }
 
 .react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {
@@ -28,6 +33,7 @@
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
   display: block;
+  width: inherit;
 }
 
 .react-datepicker__header {

@@ -34,6 +34,8 @@ function Datepicker({ handleDateChange, date }: Props): ReactElement {
       onChange={handleDateChange}
       selected={date}
       customInput={<CustomButton />}
+      popperPlacement='bottom'
+      showPopperArrow
     />
   );
 }

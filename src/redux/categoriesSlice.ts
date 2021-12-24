@@ -33,7 +33,7 @@ export const categoriesSlice = createSlice({
         state.error = action.error.message || 'error';
       })
       .addCase(addCategory.fulfilled, (state, action) => {
-        state.data.unshift(action.payload);
+        state.data.push(action.payload);
       });
   },
 });
@@ -51,13 +51,13 @@ export const fetchCategories = createAsyncThunk(
 
 export const addCategory = createAsyncThunk(
   'categories/addCategory',
-  async (title: string) => {
+  async (categoryArgs: {}) => {
     const response = await axios.post(
       '/api/categories',
+      { category: categoryArgs },
       {
-        title,
+        withCredentials: true,
       },
-      { withCredentials: true },
     );
     return response.data;
   },

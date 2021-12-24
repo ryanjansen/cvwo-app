@@ -4,15 +4,20 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './config/theme';
-import Fonts from './config/fonts';
+import GlobalStyles from './config/styles';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
+import { fetchCategories } from './redux/categoriesSlice';
+
+import 'focus-visible/dist/focus-visible';
+
+store.dispatch(fetchCategories);
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <Fonts />
+        <GlobalStyles />
         <ReduxProvider store={store}>
           <App />
         </ReduxProvider>

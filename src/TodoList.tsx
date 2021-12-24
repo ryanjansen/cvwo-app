@@ -4,10 +4,16 @@ import { Link, useParams } from 'react-router-dom';
 import TodoItem from './TodoItem';
 import type { Todo } from './types';
 
-import Categories from './Categories';
+import Categories from './components/CategoriesPicker';
 
 import AddTodo from './components/AddTodo';
-import { Container, VStack, Heading, StackDivider, Button } from '@chakra-ui/react';
+import {
+  Container,
+  VStack,
+  Heading,
+  StackDivider,
+  Button,
+} from '@chakra-ui/react';
 
 interface Props {}
 
@@ -21,25 +27,25 @@ function Todos({}: Props): ReactElement {
 
   const getTodos = () => {
     axios
-      .get<{todos: Todo[]}>('/api/todos', {
+      .get<Todo[]>('/api/todos', {
         withCredentials: true,
       })
       .then((res) => {
-        setTodos(res.data.todos);
+        setTodos(res.data);
       })
       .catch((err) => console.log(err));
   };
 
   const addTodo = (
     title: string,
-    category: string | null,
+    category_id: number | undefined,
     date: Date | null,
   ) => {
     axios
       .post(
         '/api/todos',
         {
-          todo: { title, done: false, category: category, due_date: date },
+          todo: { title, done: false, category: category_id, due_date: date },
         },
         { withCredentials: true },
       )
@@ -72,13 +78,6 @@ function Todos({}: Props): ReactElement {
       .catch((err) => console.log(err));
   };
 
-  const shownTodos =
-    category !== 'inbox'
-      ? todos.filter((todo) => todo.category === category)
-      : todos;
-
-  console.log(todos);
-
   return (
     <Container maxW="container.sm" mt={10}>
       <Heading size="md" mb="3">
@@ -86,11 +85,10 @@ function Todos({}: Props): ReactElement {
       </Heading>
       <AddTodo addTodo={addTodo} />
       <VStack divider={<StackDivider borderColor="gray.100" />}>
-        {shownTodos.map((todo) => (
+        {todos.map((todo) => (
           <TodoItem todo={todo} key={todo.id} handleUpdate={deleteTodo} />
         ))}
       </VStack>
-      <Button as={Link} to={"/app/hello"}>Hello</Button>
     </Container>
   );
 }
