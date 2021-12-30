@@ -1,6 +1,6 @@
 import React, { useState, ReactElement } from 'react';
 import axios from 'axios';
-import { useAuth } from './useAuth';
+import { useAuth } from '../context/useAuth';
 import {
   Container,
   Box,

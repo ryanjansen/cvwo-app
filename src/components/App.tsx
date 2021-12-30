@@ -4,7 +4,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Home from './Home';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, RequireAuth } from './useAuth';
+import { AuthProvider, RequireAuth } from '../context/useAuth';
 
 interface AppProps {}
 

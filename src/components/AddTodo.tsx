@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Flex, Input } from '@chakra-ui/react';
 import Datepicker from './Datepicker';
 import CategoriesPicker from './CategoriesPicker';
-import type { Category } from '../types';
+import type { Category } from '../config/types';
 
 interface Props {
   addTodo: (

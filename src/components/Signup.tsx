@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useAuth } from './useAuth';
+import { useAuth } from '../context/useAuth';
 
 interface tokenI {
   token: string;

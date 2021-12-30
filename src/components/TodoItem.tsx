@@ -1,8 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import { Box, Text, Checkbox, Flex, Circle } from '@chakra-ui/react';
-import categoryColors from './config/categoryColors';
+import categoryColors from '../config/categoryColors';
 
-import type { Todo } from './types';
+import type { Todo } from '../config/types';
 
 import dayjs from 'dayjs';
 

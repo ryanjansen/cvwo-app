@@ -1,18 +1,16 @@
 import React, { ReactElement } from 'react';
 import {
   Box,
-  Link,
   Heading,
   Text,
   Container,
   Button,
   ButtonGroup,
   Center,
-  Flex,
 } from '@chakra-ui/react';
 import { Link as RouterLink, Navigate } from 'react-router-dom';
-import { useAuth } from './useAuth';
-import HomeBg from '../public/home-bg.jpg';
+import { useAuth } from '../context/useAuth';
+import HomeBg from '../../public/home-bg.jpg';
 
 interface Props {}
 

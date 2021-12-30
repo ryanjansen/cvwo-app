@@ -2,11 +2,11 @@ import axios from 'axios';
 import React, { useState, ReactElement, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import TodoItem from './TodoItem';
-import type { Todo } from './types';
+import type { Todo } from '../config/types';
 
-import Categories from './components/CategoriesPicker';
+import Categories from './CategoriesPicker';
 
-import AddTodo from './components/AddTodo';
+import AddTodo from './AddTodo';
 import {
   Container,
   VStack,

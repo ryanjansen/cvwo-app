@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from './store';
-import type { Category, status } from '../types';
+import type { Category, status } from '../config/types';
 import axios from 'axios';
 
 interface initialState {

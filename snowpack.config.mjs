@@ -37,7 +37,8 @@ export default {
     // "bundle": true,
   },
   packageOptions: {
-    /* ... */
+    knownEntrypoints: ['react-dom/test-utils', '@chakra-ui/icon', 'react-is'],
+    polyfillNode: true,
   },
   devOptions: {
     /* ... */

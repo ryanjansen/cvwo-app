@@ -24,7 +24,7 @@ import {
 } from '../redux/categoriesSlice';
 import categoryColors from '../config/categoryColors';
 
-import type { Category, status } from '../types';
+import type { Category, status } from '../config/types';
 import type { RootState } from '../redux/store';
 interface Props extends PropsFromRedux {
   categories: Category[];
