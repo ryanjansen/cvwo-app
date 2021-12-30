@@ -1,0 +1,19 @@
+{
+  "imports": {
+    "@chakra-ui/icons": "./@chakra-ui/icons.js",
+    "@chakra-ui/react": "./@chakra-ui/react.js",
+    "@emotion/react": "./@emotion/react.js",
+    "@reduxjs/toolkit": "./@reduxjs/toolkit.js",
+    "axios": "./axios.js",
+    "dayjs": "./dayjs.js",
+    "focus-visible/dist/focus-visible": "./focus-visible/dist/focus-visible.js",
+    "react": "./react.js",
+    "react-datepicker": "./react-datepicker.js",
+    "react-datepicker/dist/react-datepicker.css": "./react-datepicker/dist/react-datepicker.css",
+    "react-dom": "./react-dom.js",
+    "react-hook-form": "./react-hook-form.js",
+    "react-icons/hi": "./react-icons/hi.js",
+    "react-redux": "./react-redux.js",
+    "react-router-dom": "./react-router-dom.js"
+  }
+}
