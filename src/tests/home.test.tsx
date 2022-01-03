@@ -13,5 +13,5 @@ it('renders and displays', async () => {
     </BrowserRouter>,
   );
 
-  expect(screen.getByText(/Get Shit Done/)).to.exist;
+  expect(screen.getByText(/Get Things Done/)).to.exist;
 });

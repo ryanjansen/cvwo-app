@@ -34,7 +34,7 @@ function Home({}: Props): ReactElement {
       </Box>
       <Center h="500px">
         <Container maxW="container.xl">
-          <Heading size={'4xl'}>Get Shit Done</Heading>
+          <Heading size={'4xl'}>Get Things Done</Heading>
           <Text fontSize={"2xl"} mb={3}>Welcome to the world's best todo app</Text>
           <ButtonGroup >
             <Button as={RouterLink} to="/signup" size="lg" colorScheme={'red'}>Signup</Button>
