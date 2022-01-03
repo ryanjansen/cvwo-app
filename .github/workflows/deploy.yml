@@ -22,8 +22,8 @@ jobs:
         run: npm ci
         
       # Run tests
-      - name: Test
-        run: npm run test
+#       - name: Test
+#         run: npm run test
 
       # Build static files
       - name: Build
